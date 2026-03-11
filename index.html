@@ -359,9 +359,11 @@ function renderAppsList(){
         <div style="font-weight:600;color:#1c1917;font-size:14px">${escHtml(a.fullname)}</div>
         <div style="font-size:12px;color:#78716c">@${escHtml(a.username)} &middot; pw: ${escHtml(a.password)}</div>
       </div>
-      <button onclick="approveApp(${i})" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;font-weight:600">✓ Approve</button>
-      <button onclick="denyApp(${i})" style="background:#dc2626;color:#fff;border:none;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;font-weight:600">✗ Deny</button>
+      <button data-approve="${i}" style="background:#16a34a;color:#fff;border:none;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;font-weight:600">✓ Approve</button>
+      <button data-deny="${i}" style="background:#dc2626;color:#fff;border:none;border-radius:6px;padding:5px 10px;cursor:pointer;font-size:12px;font-weight:600">✗ Deny</button>
     </div>`).join('');
+  list.querySelectorAll('[data-approve]').forEach(btn=>btn.addEventListener('click',()=>approveApp(+btn.dataset.approve)));
+  list.querySelectorAll('[data-deny]').forEach(btn=>btn.addEventListener('click',()=>denyApp(+btn.dataset.deny)));
 }
 function approveApp(i){
   const apps=loadApps();
